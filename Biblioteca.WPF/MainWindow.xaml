@@ -1,0 +1,84 @@
+<Window x:Class="Biblioteca.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Sistema de Gestión de Biblioteca - Arquitectura de Capas" 
+        Height="720" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BgDarkBrush}">
+    <Window.Resources>
+        <!-- Custom Navigation RadioButton Style -->
+        <Style x:Key="NavButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="10,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="{StaticResource AccentPrimaryBrush}"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar Navigation -->
+        <Border Grid.Column="0" Background="{StaticResource SidebarBgBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- System Header Brand -->
+                <StackPanel Grid.Row="0" Margin="20,25,20,30">
+                    <TextBlock Text="📖 BIBLIOTECA" Foreground="{StaticResource AccentPrimaryBrush}" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Arquitectura de Capas .NET" Foreground="{StaticResource TextSecondaryBrush}" FontSize="12" Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <!-- Nav Items -->
+                <StackPanel Grid.Row="1">
+                    <RadioButton x:Name="btnNavLibros" Content="📚   Libros" Style="{StaticResource NavButtonStyle}" IsChecked="True" Checked="btnNavLibros_Checked"/>
+                    <RadioButton x:Name="btnNavSocios" Content="👥   Socios" Style="{StaticResource NavButtonStyle}" Checked="btnNavSocios_Checked"/>
+                    <RadioButton x:Name="btnNavPrestamos" Content="📋   Préstamos" Style="{StaticResource NavButtonStyle}" Checked="btnNavPrestamos_Checked"/>
+                    <RadioButton x:Name="btnNavDevoluciones" Content="↩️   Devoluciones" Style="{StaticResource NavButtonStyle}" Checked="btnNavDevoluciones_Checked"/>
+                    <RadioButton x:Name="btnNavReportes" Content="📊   Reportes" Style="{StaticResource NavButtonStyle}" Checked="btnNavReportes_Checked"/>
+                </StackPanel>
+
+                <!-- Footer Status -->
+                <StackPanel Grid.Row="2" Margin="20">
+                    <Border Background="#1E293B" CornerRadius="6" Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="🟢 DB: BibliotecaDB" Foreground="{StaticResource AccentSuccessBrush}" FontSize="11" FontWeight="SemiBold"/>
+                            <TextBlock Text="Capa Datos ADO.NET Async" Foreground="{StaticResource TextSecondaryBrush}" FontSize="10" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content Host Area -->
+        <ContentControl x:Name="MainContentArea" Grid.Column="1" Margin="10"/>
+    </Grid>
+</Window>

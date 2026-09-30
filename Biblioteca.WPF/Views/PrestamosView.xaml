@@ -1,0 +1,98 @@
+<UserControl x:Class="Biblioteca.WPF.Views.PrestamosView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="900" Loaded="UserControl_Loaded">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Registro de Préstamos" Style="{StaticResource TitleTextStyle}" />
+            <TextBlock Text="Selección de socio, verificación de límite de 3 libros pendientes y registro transaccional" Style="{StaticResource SubtitleTextStyle}" />
+        </StackPanel>
+
+        <!-- Main Layout Split -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel: Selection -->
+            <Border Grid.Column="0" Background="{StaticResource CardBgBrush}" CornerRadius="8" Padding="15" Margin="0,0,10,0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="1. Selección de Socio" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" FontSize="16" Margin="0,0,0,10"/>
+                    
+                    <ComboBox x:Name="cboSocio" Grid.Row="1" DisplayMemberPath="Nombre" SelectedValuePath="SocioId" SelectionChanged="cboSocio_SelectionChanged" Margin="0,0,0,5"/>
+
+                    <TextBlock x:Name="lblEstadoSocio" Grid.Row="2" Text="Seleccione un socio para verificar sus préstamos pendientes." Foreground="{StaticResource AccentWarningBrush}" FontSize="12" Margin="0,0,0,15"/>
+
+                    <!-- Available Books List -->
+                    <StackPanel Grid.Row="3">
+                        <TextBlock Text="2. Libros Disponibles en Catálogo" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" FontSize="16" Margin="0,0,0,10"/>
+                        <DataGrid x:Name="dgLibrosDisponibles" Height="220">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Título" Binding="{Binding Titulo}" Width="*"/>
+                                <DataGridTextColumn Header="Autor" Binding="{Binding NombreAutor}" Width="130"/>
+                                <DataGridTextColumn Header="Stock" Binding="{Binding Ejemplares}" Width="60"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+
+                    <Button x:Name="btnAgregarLibro" Grid.Row="4" Content="➕ Agregar Libro Seleccionado" Click="btnAgregarLibro_Click" Margin="0,15,0,0"/>
+                </Grid>
+            </Border>
+
+            <!-- Right Panel: Selected Books & Confirmation -->
+            <Border Grid.Column="1" Background="{StaticResource CardBgBrush}" CornerRadius="8" Padding="15" Margin="10,0,0,0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="3. Libros Incluidos en el Préstamo" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" FontSize="16" Margin="0,0,0,10"/>
+
+                    <!-- Selected Books DataGrid -->
+                    <DataGrid x:Name="dgLibrosSeleccionados" Grid.Row="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding LibroId}" Width="50"/>
+                            <DataGridTextColumn Header="Título" Binding="{Binding Titulo}" Width="*"/>
+                            <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}" Width="120"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="2" Margin="0,15,0,15">
+                        <TextBlock Text="Fecha Límite de Devolución:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,5"/>
+                        <DatePicker x:Name="dpFechaLimite"/>
+                    </StackPanel>
+
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnQuitarLibro" Grid.Column="0" Content="❌ Quitar" Background="#475569" Click="btnQuitarLibro_Click" Margin="0,0,5,0"/>
+                        <Button x:Name="btnRegistrarPrestamo" Grid.Column="1" Content="🚀 Registrar Préstamo" Style="{StaticResource SuccessButtonStyle}" Click="btnRegistrarPrestamo_Click" Margin="5,0,0,0"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

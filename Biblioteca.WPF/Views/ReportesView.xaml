@@ -1,0 +1,58 @@
+<UserControl x:Class="Biblioteca.WPF.Views.ReportesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="900" Loaded="UserControl_Loaded">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Reporte de Préstamos por Fecha" Style="{StaticResource TitleTextStyle}" />
+            <TextBlock Text="Consulta de historial obtenido mediante INNER JOIN de Prestamos, DetallePrestamo, Libros y Socios" Style="{StaticResource SubtitleTextStyle}" />
+        </StackPanel>
+
+        <!-- Filter Bar -->
+        <Border Grid.Row="1" Background="{StaticResource CardBgBrush}" CornerRadius="8" Padding="15" Margin="0,0,0,15" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Fecha Inicio:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" Margin="5,0,10,0"/>
+                <DatePicker x:Name="dpFechaInicio" Grid.Column="1"/>
+
+                <TextBlock Grid.Column="2" Text="Fecha Fin:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" Margin="15,0,10,0"/>
+                <DatePicker x:Name="dpFechaFin" Grid.Column="3"/>
+
+                <Button x:Name="btnGenerar" Grid.Column="5" Content="📊 Generar Reporte" Click="btnGenerar_Click" Margin="10,0,5,0"/>
+            </Grid>
+        </Border>
+
+        <!-- DataGrid Report Results -->
+        <DataGrid x:Name="dgReporte" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="N° Préstamo" Binding="{Binding PrestamoId}" Width="90"/>
+                <DataGridTextColumn Header="Socio" Binding="{Binding Socio}" Width="160"/>
+                <DataGridTextColumn Header="DNI" Binding="{Binding DNI}" Width="90"/>
+                <DataGridTextColumn Header="Libro Prestado" Binding="{Binding Libro}" Width="*"/>
+                <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}" Width="120"/>
+                <DataGridTextColumn Header="F. Préstamo" Binding="{Binding FechaPrestamo, StringFormat='dd/MM/yyyy'}" Width="100"/>
+                <DataGridTextColumn Header="F. Límite" Binding="{Binding FechaLimite, StringFormat='dd/MM/yyyy'}" Width="100"/>
+                <DataGridTextColumn Header="F. Devolución" Binding="{Binding FechaDevolucion, StringFormat='dd/MM/yyyy', TargetNullValue='PENDIENTE'}" Width="110"/>
+                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="90"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

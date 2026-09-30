@@ -1,0 +1,83 @@
+<UserControl x:Class="Biblioteca.WPF.Views.SociosView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="900" Loaded="UserControl_Loaded">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Gestión de Socios" Style="{StaticResource TitleTextStyle}" />
+            <TextBlock Text="Mantenimiento de socios registrados, validación de DNI único y préstamos activos" Style="{StaticResource SubtitleTextStyle}" />
+        </StackPanel>
+
+        <!-- Search Bar -->
+        <Grid Grid.Row="1" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="txtBuscar" Grid.Column="0" Margin="0,0,10,0" KeyUp="txtBuscar_KeyUp"
+                     ToolTip="Escriba nombre o DNI para filtrar" />
+
+            <Button x:Name="btnBuscar" Grid.Column="1" Content="🔍 Buscar" Click="btnBuscar_Click" Margin="0,0,10,0"/>
+            <Button x:Name="btnNuevo" Grid.Column="2" Content="➕ Nuevo Socio" Click="btnNuevo_Click"/>
+        </Grid>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="dgSocios" Grid.Row="2" SelectionChanged="dgSocios_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding SocioId}" Width="60"/>
+                <DataGridTextColumn Header="DNI" Binding="{Binding DNI}" Width="120"/>
+                <DataGridTextColumn Header="Nombre y Apellidos" Binding="{Binding Nombre}" Width="*"/>
+                <DataGridTextColumn Header="Correo Electrónico" Binding="{Binding Email}" Width="220"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Form Card -->
+        <Border Grid.Row="3" Background="{StaticResource CardBgBrush}" CornerRadius="8" Padding="15" Margin="0,15,0,0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
+                    <TextBlock Text="DNI (8 dígitos):" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtDNI" MaxLength="8"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                    <TextBlock Text="Nombre Completo:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtNombre"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="2" Margin="5">
+                    <TextBlock Text="Correo Electrónico:" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtEmail"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,5,0">
+                    <Button x:Name="btnGuardar" Content="💾 Guardar Socio" Click="btnGuardar_Click" Margin="0,0,10,0"/>
+                    <Button x:Name="btnEliminar" Content="🗑️ Dar de Baja (Lógica)" Style="{StaticResource DangerButtonStyle}" Click="btnEliminar_Click" Margin="0,0,10,0"/>
+                    <Button x:Name="btnLimpiar" Content="🧹 Limpiar Formulario" Background="#475569" Click="btnLimpiar_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
